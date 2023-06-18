@@ -1,5 +1,19 @@
 package my.edu.utem.ftmk.dad.attendancesystem.controller;
 
+/**
+ * ExaminationMenuController
+ * 
+ * This class handles the user interface and actions related to the examination menu.
+ * It provides functionality for managing and conducting examinations.
+ * 
+ * 
+ * Usage:
+ * - Instantiate ExaminationMenuController to display the examination menu.
+ * - Call methods to perform desired actions and handle user input.
+ * 
+ *@author ezzajeslin
+ */
+
 import java.util.Arrays;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,18 +35,17 @@ import my.edu.utem.ftmk.dad.attendancesystem.model.Examination;
 import my.edu.utem.ftmk.dad.attendancesystem.model.Student;
 import my.edu.utem.ftmk.dad.attendancesystem.repository.StudentRepository;
 
-
 @Controller
 public class ExaminationMenuController {
 	
 	private String defaultURI = "http://localhost:8080/attendancesystem/api/examinations";
 	
+	//Retrieves a list of examinations from the examination system API and attaches it to the model.
 	@GetMapping("/examination/list")
-	public String getExaminations(Model model) {
-		
+	public String getExaminations(Model model) 
+	{
 		//The URI for GET examination
 		String uri = "http://localhost:8080/attendancesystem/api/examinations";
-		
 		
 		//Get a list of examinations from the web service
 		RestTemplate restTemplate = new RestTemplate();
@@ -50,8 +63,10 @@ public class ExaminationMenuController {
 		return "examinations";
 	}
 	
+	//Retrieves an examination with the given examId and attaches it to the model.
 	@GetMapping("/examination/{examId}")
-	public String getExamination (@PathVariable Integer examId, Model model) {
+	public String getExamination (@PathVariable Integer examId, Model model) 
+	{
 		String pageTitle = "New Examination";
 		Examination examination = new Examination();
 			
@@ -67,16 +82,11 @@ public class ExaminationMenuController {
 	
 	@Autowired
 	private StudentRESTController studentService;
-	
-	/*
-	 * @GetMapping("/examination/search") public String
-	 * searchExamination(@RequestParam String studentName, Model model) {
-	 * List<Student> students = studentRepository.findByStudentName(studentName);
-	 * model.addAttribute("students", students); return "searchName"; }
-	 */
-	
+		
+	//Searches for students by keyword and attaches the search results, exam ID, and current date and time to the model.
 	@GetMapping("/examination/search")
-	public String searchExamination(@RequestParam String keyword, @RequestParam Long examId, Model model) {
+	public String searchExamination(@RequestParam String keyword, @RequestParam Long examId, Model model) 
+	{
 	    List<Student> students = new ArrayList<>();
 	    try {
 		    LocalDateTime currentDateTime = LocalDateTime.now();
@@ -100,10 +110,10 @@ public class ExaminationMenuController {
 	    return "searchName";
 	}
 	
-	
+	//Updates or adds an examination by sending a HTTP request to the examination system API.
 	@RequestMapping("/examination/save")
-	public String updateExamination (@ModelAttribute Examination examination) {
-		
+	public String updateExamination (@ModelAttribute Examination examination) 
+	{		
 		//Create a new RestTemplate
 		RestTemplate restTemplate = new RestTemplate();
 		
@@ -130,6 +140,12 @@ public class ExaminationMenuController {
 		
 	}
 	
-	
-
 }
+
+/*
+ * @GetMapping("/examination/search") public String
+ * searchExamination(@RequestParam String studentName, Model model) {
+ * List<Student> students = studentRepository.findByStudentName(studentName);
+ * model.addAttribute("students", students); return "searchName"; }
+ */
+

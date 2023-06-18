@@ -21,17 +21,37 @@ import my.edu.utem.ftmk.dad.attendancesystem.model.Examination;
 import my.edu.utem.ftmk.dad.attendancesystem.model.Student;
 import my.edu.utem.ftmk.dad.attendancesystem.repository.AttendanceRepository;
 
+/**
+ * AttendanceMenuController
+ * 
+ * This class handles the user interface and actions related to the attendance menu.
+ * It allows users to view and manage examination attendance records for student.
+ * 
+ * 
+ * Available actions:
+ * - View attendance records
+ * - Insert new attendance record for student
+ * - Update or edit existing attendance records.
+ * - Generate attendance reports for a specified time period.
+ * 
+ * Usage:
+ * - Instantiate AttendanceMenuController to display the attendance menu.
+ * - Call methods to perform desired actions and handle user input.
+ * 
+ *@author ezzajeslin
+ */
+
 @Controller
 public class AttendanceMenuController {
 
 	private String defaultURI = "http://localhost:8080/attendancesystem/api/attendances";
 	
+	//Retrieves a list of attendances and attaches it to the model.	 
 	@GetMapping("/attendance/list")
-	public String getAttendances(Model model) {
-		
+	public String getAttendances(Model model) 
+	{		
 		//The URI for GET examination
-		String uri = "http://localhost:8080/attendancesystem/api/attendances";
-		
+		String uri = "http://localhost:8080/attendancesystem/api/attendances";		
 		
 		//Get a list of examinations from the web service
 		RestTemplate restTemplate = new RestTemplate();
@@ -49,10 +69,11 @@ public class AttendanceMenuController {
 		return "attendances";
 	}
 	
+	//Inserts an attendance record into the attendance system API.
 	@RequestMapping("/attendance/save")
-    public String insertAttendance(@ModelAttribute Attendance attendance, @RequestParam int examId, @RequestParam int studentId) {
-
-	RestTemplate restTemplate = new RestTemplate();
+    public String insertAttendance(@ModelAttribute Attendance attendance, @RequestParam int examId, @RequestParam int studentId) 
+	{
+		RestTemplate restTemplate = new RestTemplate();
 	
 	 	// Set the examId value to the attendance object
 		 Examination examination = new Examination();
