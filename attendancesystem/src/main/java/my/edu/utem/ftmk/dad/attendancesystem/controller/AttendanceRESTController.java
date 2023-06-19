@@ -67,6 +67,12 @@ public class AttendanceRESTController {
 		return attendance;
 	}
 	
+	//Retrieves attendance records by exam ID from the attendance repository.
+	@GetMapping("/attendances/{examId}")
+	public List<Attendance> getAttendancesByExamId(@PathVariable int examId) {
+	    return attendanceRepository.findByExaminationExamId(examId);
+	}
+	
 	//Inserts a new attendance record into the attendance repository.
 	@PostMapping()
 	public Attendance insertAttendance(@RequestBody Attendance attendance)
