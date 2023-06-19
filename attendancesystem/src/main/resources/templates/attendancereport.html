@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0" />
+  <title>Attendance Report</title>
+
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+
+<body>
+  <div th:replace="fragments/header :: header"></div>
+
+  <div class="container-fluid" style="max-width: 900px; margin: 0 auto;">
+    <h2 class="text-center">Attendance Report</h2>
+
+    <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
+      role="alert">
+      [[${message}]]
+      <button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div>
+      <div class="text-left mb-3">
+        <strong>Total Students:</strong> [[${totalStudents}]]
+      </div>
+      <div class="text-left mb-3">
+        <strong>Total Attendance:</strong> [[${totalAttendance}]]
+      </div>
+      <div class="text-left mb-3">
+        <strong>Total Absent Students:</strong> [[${totalAbsence}]]
+      </div>
+
+      <h3 class="text-center">Attended Students</h3>
+      <table class="table table-hover table-responsive-xl">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">No</th>
+            <th scope="col">Matric No</th>
+            <th scope="col">Name</th>
+            <th scope="col">Exam Date</th>
+             <th scope="col">Device Type</th>
+            <th scope="col">Attendance Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:if="${attendanceList.isEmpty()}">
+	        <td colspan="6">No records found.</td>
+	   	  </tr>
+          <tr th:each="attendance, counterAttended : ${attendanceList}">
+            <td>[[${counterAttended.count}]]</td>
+            <td>[[${attendance.student.matricNo}]]</td>
+            <td>[[${attendance.student.studentName}]]</td>
+            <td>[[${#dates.format(attendance.examination.examDate, 'dd-MM-yyyy')}]]</td>
+            <td>[[${attendance.deviceType}]]</td>
+            <td>[[${#temporals.format(attendance.attendanceDateTime, 'dd-MM-yyyy HH:mm')}]]</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 class="text-center">Absent Students</h3>
+      <table class="table table-hover table-responsive-xl">
+        <thead class="thead-light">
+          <tr>
+          	<th scope="col">No</th>
+            <th scope="col">Matric No</th>
+            <th scope="col">Name</th>
+            <th scope="col">Student Email</th>
+             <th scope="col">Student Phone No</th>
+            <th scope="col">Staff Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:if="${absenceList.isEmpty()}">
+	        <td colspan="6">No records found.</td>
+	   	  </tr>
+          <tr th:each="student, counterAbsence : ${absenceList}" th:count="true">
+            <td>[[${counterAbsence.count}]]</td>
+            <td>[[${student.matricNo}]]</td>
+            <td>[[${student.studentName}]]</td>
+         	<td>[[${student.studentEmail}]]</td>
+         	<td>[[${student.studentPhoneNo}]]</td>
+         	<td>[[${student.Staff.staffName}]]</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <div th:replace="fragments/footer :: footer"></div>
+</body>
+
+</html>
