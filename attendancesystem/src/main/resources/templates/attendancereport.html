@@ -47,8 +47,9 @@
             <th scope="col">No</th>
             <th scope="col">Matric No</th>
             <th scope="col">Name</th>
-            <th scope="col">Exam Date</th>
-             <th scope="col">Device Type</th>
+            <th scope="col">Exam Time</th>
+            <th scope="col">Subject</th>
+            <th scope="col">Device Type</th>
             <th scope="col">Attendance Time</th>
           </tr>
         </thead>
@@ -60,7 +61,8 @@
             <td>[[${counterAttended.count}]]</td>
             <td>[[${attendance.student.matricNo}]]</td>
             <td>[[${attendance.student.studentName}]]</td>
-            <td>[[${#dates.format(attendance.examination.examDate, 'dd-MM-yyyy')}]]</td>
+            <td>[[${#dates.format(attendance.examination.examDate, 'dd-MM-yyyy')}]] [[${#temporals.format(attendance.examination.examStartTime, 'HH:mm')}]]</td>
+            <td>[[${attendance.examination.subject.subjectName}]]</td>
             <td>[[${attendance.deviceType}]]</td>
             <td>[[${#temporals.format(attendance.attendanceDateTime, 'dd-MM-yyyy HH:mm')}]]</td>
           </tr>
