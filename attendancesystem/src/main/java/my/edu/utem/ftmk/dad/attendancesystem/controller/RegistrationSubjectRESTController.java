@@ -39,6 +39,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import my.edu.utem.ftmk.dad.attendancesystem.model.RegistrationSubject;
@@ -58,13 +59,21 @@ public class RegistrationSubjectRESTController {
 		return registrationSubjectRespository.findAll();
 	}
 	
-	//Retrieves a registration subject by its registerId.
-	@GetMapping("{registerId}")
-	public RegistrationSubject getRegistrationSubject(@PathVariable long registerId)
+	//Retrieves a registration subject by its subjectId.
+	@GetMapping("{subjectId}")
+	public List<RegistrationSubject> getRegistrationSubject(@PathVariable long subjectId)
 	{
-		RegistrationSubject registrationSubject = registrationSubjectRespository.findById(registerId).get();
-		return registrationSubject;
+		return registrationSubjectRespository.findBySubjectSubjectId(subjectId);
 	}
+	
+	/*
+	 * 
+	 */
+	@GetMapping("/count/{subjectId}")
+	public int countRegisteredStudents(@PathVariable long subjectId) {
+	    return registrationSubjectRespository.countBySubjectSubjectId(subjectId);
+	}
+
 	
 	//Inserts a new registration subject into the system.
 	@PostMapping()
